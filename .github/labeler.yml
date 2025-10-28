@@ -1,0 +1,25 @@
+# Pull request labels
+'frontend':
+  - 'src/**/*.jsx'
+  - 'src/**/*.css'
+  - 'index.html'
+  - 'vite.config.js'
+
+'backend':
+  - 'server/**/*.js'
+
+'docker':
+  - 'Dockerfile'
+  - 'docker-compose.yml'
+  - '.dockerignore'
+
+'ci/cd':
+  - '.github/workflows/**'
+
+'documentation':
+  - '*.md'
+  - 'docs/**'
+
+'dependencies':
+  - 'package.json'
+  - 'package-lock.json'
