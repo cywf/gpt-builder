@@ -16,7 +16,7 @@
   Create and manage custom AI model configurations with an intuitive interface
 </p>
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing)
+[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [API](docs/API.md) • [Deployment](docs/DEPLOYMENT.md) • [Contributing](#-contributing)
 
 </div>
 
@@ -100,6 +100,8 @@ graph TB
 </div>
 
 ## 🚀 Quick Start
+
+> **New to GPT Builder?** Check out our [Quick Start Guide](docs/QUICKSTART.md) for a step-by-step walkthrough!
 
 ### Prerequisites
 
