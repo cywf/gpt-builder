@@ -1,25 +1,37 @@
-# Pull request labels
-'frontend':
-  - 'src/**/*.jsx'
-  - 'src/**/*.css'
-  - 'index.html'
-  - 'vite.config.js'
+# Pull request labels configuration for actions/labeler@v5
+frontend:
+  - changed-files:
+    - any-glob-to-any-file: 'src/**/*.jsx'
+  - changed-files:
+    - any-glob-to-any-file: 'src/**/*.css'
+  - changed-files:
+    - any-glob-to-any-file: 'index.html'
+  - changed-files:
+    - any-glob-to-any-file: 'vite.config.js'
 
-'backend':
-  - 'server/**/*.js'
+backend:
+  - changed-files:
+    - any-glob-to-any-file: 'server/**/*.js'
 
-'docker':
-  - 'Dockerfile'
-  - 'docker-compose.yml'
-  - '.dockerignore'
+docker:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
 
-'ci/cd':
-  - '.github/workflows/**'
+ci/cd:
+  - changed-files:
+    - any-glob-to-any-file: '.github/workflows/**'
 
-'documentation':
-  - '*.md'
-  - 'docs/**'
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '*.md'
+      - 'docs/**'
 
-'dependencies':
-  - 'package.json'
-  - 'package-lock.json'
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'package.json'
+      - 'package-lock.json'
