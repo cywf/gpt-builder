@@ -68,11 +68,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Docker Scout CVEs
-        uses: docker/scout-action@v1
-        if: github.event_name == 'pull_request'
-        with:
-          command: cves
-          image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
-          exit-code: false
+      # Docker Scout step removed due to entitlement issues
+      # - name: Docker Scout CVEs
+      #   uses: docker/scout-action@v1
+      #   if: github.event_name == 'pull_request'
+      #   with:
+      #     command: cves
+      #     image: ${{ steps.meta.outputs.tags }}
+      #     only-severities: critical,high
+      #     exit-code: false
