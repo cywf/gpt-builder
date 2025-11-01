@@ -1,0 +1,37 @@
+# Pull request labels configuration for actions/labeler@v5
+frontend:
+  - changed-files:
+    - any-glob-to-any-file: 'src/**/*.jsx'
+  - changed-files:
+    - any-glob-to-any-file: 'src/**/*.css'
+  - changed-files:
+    - any-glob-to-any-file: 'index.html'
+  - changed-files:
+    - any-glob-to-any-file: 'vite.config.js'
+
+backend:
+  - changed-files:
+    - any-glob-to-any-file: 'server/**/*.js'
+
+docker:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
+
+ci/cd:
+  - changed-files:
+    - any-glob-to-any-file: '.github/workflows/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '*.md'
+      - 'docs/**'
+
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'package.json'
+      - 'package-lock.json'
