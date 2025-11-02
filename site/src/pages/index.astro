@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="Home">
+  <div class="space-y-8">
+    <!-- Hero Section -->
+    <div class="hero bg-base-200 rounded-lg">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold mb-4">🤖 GPT Builder</h1>
+          <p class="text-xl mb-2">Interactive Dashboard for Building Custom AI Models</p>
+          <p class="text-lg opacity-70">
+            <strong>Build • Architect • Export</strong>
+          </p>
+          <p class="py-6">
+            Create and manage custom AI model configurations with an intuitive interface
+          </p>
+          <div class="flex gap-2 justify-center flex-wrap">
+            <a href={baseUrl + '/demo'} class="btn btn-primary">
+              Try Demo
+            </a>
+            <a href={baseUrl + '/docs'} class="btn btn-outline">
+              View Docs
+            </a>
+            <a
+              href="https://github.com/cywf/gpt-builder"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-ghost"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="flex flex-wrap gap-2 justify-center">
+      <img
+        src="https://github.com/cywf/gpt-builder/actions/workflows/ci.yml/badge.svg"
+        alt="CI Status"
+      />
+      <img
+        src="https://github.com/cywf/gpt-builder/actions/workflows/docker-build.yml/badge.svg"
+        alt="Docker Build"
+      />
+      <img
+        src="https://img.shields.io/badge/license-MIT-blue.svg"
+        alt="License"
+      />
+      <img
+        src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg"
+        alt="Node Version"
+      />
+      <img
+        src="https://img.shields.io/badge/docker-ready-blue.svg"
+        alt="Docker"
+      />
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">🎨 Interactive Dashboard</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li><strong>Visual Model Builder</strong> - Create AI models with an intuitive interface</li>
+            <li><strong>Real-time Preview</strong> - See your configurations in action</li>
+            <li><strong>Drag & Drop</strong> - Easy organization of prompts and templates</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">📝 Prompt Management</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li><strong>Store & Organize</strong> - Keep all your prompts in one place</li>
+            <li><strong>Categorization</strong> - Tag and categorize for easy retrieval</li>
+            <li><strong>Version Control</strong> - Track changes to your prompts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">🎭 System Instructions</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li><strong>Custom Behavior</strong> - Define how your AI should respond</li>
+            <li><strong>Temperature Control</strong> - Fine-tune creativity vs. consistency</li>
+            <li><strong>Token Management</strong> - Control response length</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">🚀 Export & Share</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li><strong>GPT Profiles</strong> - Export complete configurations</li>
+            <li><strong>Template Library</strong> - Share with the community</li>
+            <li><strong>JSON Format</strong> - Compatible with various AI platforms</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">🏗️ Tech Stack</h2>
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>Frontend</th>
+                <th>Backend</th>
+                <th>DevOps</th>
+                <th>Tools</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>React 19</td>
+                <td>Node.js 20</td>
+                <td>Docker</td>
+                <td>Vite</td>
+              </tr>
+              <tr>
+                <td>Vite</td>
+                <td>Express 5</td>
+                <td>GitHub Actions</td>
+                <td>ESLint</td>
+              </tr>
+              <tr>
+                <td>Axios</td>
+                <td>File-based Storage</td>
+                <td>Docker Compose</td>
+                <td>Nodemon</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">🔗 Quick Links</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a
+            href="https://github.com/cywf/gpt-builder/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            📋 Issues
+          </a>
+          <a
+            href="https://github.com/cywf/gpt-builder/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            💬 Discussions
+          </a>
+          <a
+            href="https://github.com/cywf/gpt-builder/pkgs/container/gpt-builder"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            📦 Packages
+          </a>
+          <a
+            href="https://github.com/cywf/gpt-builder/actions"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            ⚙️ CI Workflows
+          </a>
+          <a href={baseUrl + '/docs#quickstart'} class="btn btn-outline">
+            🚀 Quick Start
+          </a>
+          <a href={baseUrl + '/docs#deployment'} class="btn btn-outline">
+            🚢 Deployment
+          </a>
+          <a href={baseUrl + '/docs#api'} class="btn btn-outline">
+            📖 API Docs
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Start Section -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">🚀 Quick Start</h2>
+        <div class="tabs tabs-boxed mb-4">
+          <a class="tab tab-active">Local</a>
+          <a class="tab">Docker</a>
+        </div>
+        <div class="mockup-code">
+          <pre data-prefix="$"><code>git clone https://github.com/cywf/gpt-builder.git</code></pre>
+          <pre data-prefix="$"><code>cd gpt-builder</code></pre>
+          <pre data-prefix="$"><code>npm install</code></pre>
+          <pre data-prefix="$"><code>npm run dev:all</code></pre>
+          <pre data-prefix=">" class="text-success"><code>Frontend: http://localhost:3000</code></pre>
+          <pre data-prefix=">" class="text-success"><code>Backend: http://localhost:3001</code></pre>
+        </div>
+        <div class="mt-4">
+          <p class="text-sm opacity-70">
+            See the full <a href={baseUrl + '/docs'} class="link link-primary">documentation</a> for more installation options.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

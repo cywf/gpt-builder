@@ -1,0 +1,83 @@
+[
+  {
+    "id": "demo-template-1",
+    "name": "API Documentation Template",
+    "description": "A comprehensive template for documenting REST APIs",
+    "category": "Development",
+    "content": {
+      "endpoint": "[METHOD] /api/endpoint",
+      "description": "Brief description of what this endpoint does",
+      "authentication": "Required/Optional - Type of authentication",
+      "parameters": [
+        {
+          "name": "param1",
+          "type": "string",
+          "required": true,
+          "description": "Description of parameter"
+        }
+      ],
+      "requestExample": "{\n  \"key\": \"value\"\n}",
+      "responseExample": "{\n  \"status\": \"success\",\n  \"data\": {}\n}",
+      "errorCodes": [
+        {
+          "code": 400,
+          "description": "Bad Request"
+        }
+      ]
+    },
+    "tags": ["api", "documentation", "rest"],
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "id": "demo-template-2",
+    "name": "User Story Template",
+    "description": "Template for writing user stories in agile development",
+    "category": "Project Management",
+    "content": {
+      "title": "[User Story Title]",
+      "asA": "[Type of user]",
+      "iWant": "[Goal or desire]",
+      "soThat": "[Benefit or value]",
+      "acceptanceCriteria": [
+        "Given [context]",
+        "When [action]",
+        "Then [expected result]"
+      ],
+      "priority": "High/Medium/Low",
+      "storyPoints": "TBD"
+    },
+    "tags": ["agile", "user-story", "project-management"],
+    "createdAt": "2024-01-15T08:30:00.000Z"
+  },
+  {
+    "id": "demo-template-3",
+    "name": "Character Profile Template",
+    "description": "Detailed template for developing fictional characters",
+    "category": "Creative Writing",
+    "content": {
+      "basicInfo": {
+        "name": "[Character Name]",
+        "age": "[Age]",
+        "occupation": "[Occupation]",
+        "location": "[Location]"
+      },
+      "physicalDescription": "[Describe appearance]",
+      "personality": {
+        "traits": ["trait1", "trait2"],
+        "strengths": ["strength1"],
+        "weaknesses": ["weakness1"]
+      },
+      "background": "[Character's history]",
+      "motivation": "[What drives this character]",
+      "conflict": "[Internal or external conflicts]",
+      "relationships": [
+        {
+          "name": "[Related character]",
+          "relationship": "[Type of relationship]"
+        }
+      ]
+    },
+    "tags": ["character", "writing", "creative", "fiction"],
+    "createdAt": "2024-01-16T12:00:00.000Z"
+  }
+]

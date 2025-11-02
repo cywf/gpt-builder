@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-base-100 text-base-content;
+  }
+
+  /* Skip to content link */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-content focus:rounded;
+  }
+
+  /* Code highlighting for dark themes */
+  pre {
+    @apply bg-base-300 text-base-content p-4 rounded-lg overflow-x-auto;
+  }
+
+  code {
+    @apply bg-base-300 text-accent px-1 rounded;
+  }
+
+  /* Mermaid diagram styling */
+  .mermaid {
+    @apply bg-base-200 p-4 rounded-lg;
+  }
+}
+
+@layer components {
+  .breadcrumb-item {
+    @apply inline-flex items-center;
+  }
+
+  .breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    @apply mx-2 opacity-50;
+  }
+}

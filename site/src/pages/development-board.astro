@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Development Board">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-4xl font-bold mb-2">📋 Development Board</h1>
+      <p class="text-lg opacity-70">
+        Track project progress and ongoing work
+      </p>
+    </div>
+
+    <!-- Board Container -->
+    <div id="board-container">
+      <div class="text-center p-8">
+        <span class="loading loading-spinner loading-lg"></span>
+        <p class="mt-4">Loading project board...</p>
+      </div>
+    </div>
+
+    <!-- Link to GitHub Projects -->
+    <div class="alert alert-info">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="stroke-current shrink-0 w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <div>
+        <div class="text-sm">
+          For the full interactive experience, visit the 
+          <a
+            href="https://github.com/cywf/gpt-builder/projects"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link link-hover font-bold"
+          >
+            GitHub Projects board
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const baseUrl = import.meta.env.BASE_URL;
+
+  interface ProjectItem {
+    title: string;
+    url: string;
+    status: string;
+    labels: string[];
+    assignees: string[];
+  }
+
+  async function loadBoard() {
+    try {
+      const response = await fetch(`${baseUrl}/data/projects.json`);
+      const data = await response.json();
+      const items: ProjectItem[] = data.items || [];
+      
+      if (items.length === 0) {
+        renderFallback();
+        return;
+      }
+
+      renderBoard(items);
+    } catch (error) {
+      console.error('Failed to load project data:', error);
+      renderFallback();
+    }
+  }
+
+  function renderBoard(items: ProjectItem[]) {
+    const container = document.getElementById('board-container');
+    if (!container) return;
+
+    // Group items by status
+    const columns = ['todo', 'in progress', 'done'];
+    const grouped: Record<string, ProjectItem[]> = {
+      'todo': [],
+      'in progress': [],
+      'done': []
+    };
+
+    items.forEach(item => {
+      const status = item.status.toLowerCase();
+      if (columns.includes(status)) {
+        grouped[status].push(item);
+      } else {
+        // Default to todo if status doesn't match
+        grouped['todo'].push(item);
+      }
+    });
+
+    container.innerHTML = `
+      <div class="grid md:grid-cols-3 gap-4">
+        ${columns.map(column => `
+          <div class="card bg-base-200 shadow-xl">
+            <div class="card-body">
+              <h2 class="card-title capitalize">${column}</h2>
+              <div class="space-y-2">
+                ${grouped[column].length === 0 ? `
+                  <p class="text-sm opacity-50">No items</p>
+                ` : grouped[column].map(item => `
+                  <div class="card bg-base-100 shadow">
+                    <div class="card-body p-4">
+                      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card-title text-sm link link-hover">
+                        ${item.title}
+                      </a>
+                      ${item.labels.length > 0 ? `
+                        <div class="flex gap-1 flex-wrap mt-2">
+                          ${item.labels.map(label => `<div class="badge badge-xs badge-outline">${label}</div>`).join('')}
+                        </div>
+                      ` : ''}
+                      ${item.assignees.length > 0 ? `
+                        <div class="text-xs opacity-70 mt-1">
+                          Assignees: ${item.assignees.join(', ')}
+                        </div>
+                      ` : ''}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function renderFallback() {
+    const container = document.getElementById('board-container');
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="alert alert-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div>
+          <h3 class="font-bold">Project board data not available</h3>
+          <div class="text-sm">
+            Visit the 
+            <a href="https://github.com/cywf/gpt-builder/projects" target="_blank" rel="noopener noreferrer" class="link font-bold">
+              GitHub Projects page
+            </a> 
+            or 
+            <a href="https://github.com/cywf/gpt-builder/issues" target="_blank" rel="noopener noreferrer" class="link font-bold">
+              Issues page
+            </a>
+            to view the project board.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  loadBoard();
+</script>

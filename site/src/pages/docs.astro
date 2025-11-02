@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+// Read documentation files
+const docsPath = join(process.cwd(), '..', 'docs');
+const rootPath = join(process.cwd(), '..');
+
+let readmeContent = '';
+let quickstartContent = '';
+let deploymentContent = '';
+let apiContent = '';
+
+try {
+  readmeContent = await readFile(join(rootPath, 'README.md'), 'utf-8');
+  quickstartContent = await readFile(join(docsPath, 'QUICKSTART.md'), 'utf-8');
+  deploymentContent = await readFile(join(docsPath, 'DEPLOYMENT.md'), 'utf-8');
+  apiContent = await readFile(join(docsPath, 'API.md'), 'utf-8');
+} catch (error) {
+  console.error('Error reading docs:', error);
+}
+
+const docs = [
+  {
+    id: 'readme',
+    title: 'README',
+    content: readmeContent,
+    githubUrl: 'https://github.com/cywf/gpt-builder/blob/main/README.md',
+  },
+  {
+    id: 'quickstart',
+    title: 'Quick Start Guide',
+    content: quickstartContent,
+    githubUrl: 'https://github.com/cywf/gpt-builder/blob/main/docs/QUICKSTART.md',
+  },
+  {
+    id: 'deployment',
+    title: 'Deployment Guide',
+    content: deploymentContent,
+    githubUrl: 'https://github.com/cywf/gpt-builder/blob/main/docs/DEPLOYMENT.md',
+  },
+  {
+    id: 'api',
+    title: 'API Documentation',
+    content: apiContent,
+    githubUrl: 'https://github.com/cywf/gpt-builder/blob/main/docs/API.md',
+  },
+];
+---
+
+<Layout title="Documentation">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-4xl font-bold mb-2">📖 Documentation</h1>
+      <p class="text-lg opacity-70">
+        Comprehensive guides and API references for GPT Builder
+      </p>
+    </div>
+
+    <!-- Doc Selector -->
+    <div class="tabs tabs-boxed bg-base-200">
+      {
+        docs.map((doc, index) => (
+          <a
+            href={`#${doc.id}`}
+            class={`tab ${index === 0 ? 'tab-active' : ''}`}
+            data-doc-tab={doc.id}
+          >
+            {doc.title}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Doc Content -->
+    {
+      docs.map((doc, index) => (
+        <div
+          id={doc.id}
+          class={`doc-content ${index !== 0 ? 'hidden' : ''}`}
+          data-doc-content={doc.id}
+        >
+          <div class="card bg-base-200 shadow-xl">
+            <div class="card-body">
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="card-title text-2xl">{doc.title}</h2>
+                <a
+                  href={doc.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-outline btn-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="mr-1"
+                  >
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  Open in GitHub
+                </a>
+              </div>
+              <div class="prose prose-invert max-w-none">
+                <div set:html={doc.content} />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
+
+<script>
+  // Handle tab switching
+  const tabs = document.querySelectorAll('[data-doc-tab]');
+  const contents = document.querySelectorAll('[data-doc-content]');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = tab.getAttribute('data-doc-tab');
+
+      // Update tab active state
+      tabs.forEach((t) => t.classList.remove('tab-active'));
+      tab.classList.add('tab-active');
+
+      // Show/hide content
+      contents.forEach((content) => {
+        const contentId = content.getAttribute('data-doc-content');
+        if (contentId === targetId) {
+          content.classList.remove('hidden');
+        } else {
+          content.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Handle hash navigation
+  if (window.location.hash) {
+    const hash = window.location.hash.substring(1);
+    const tab = document.querySelector(`[data-doc-tab="${hash}"]`);
+    if (tab) {
+      (tab as HTMLElement).click();
+    }
+  }
+</script>
+
+<style>
+  .prose {
+    color: inherit;
+  }
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: inherit;
+    font-weight: bold;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  .prose h1 {
+    font-size: 2em;
+  }
+  .prose h2 {
+    font-size: 1.5em;
+  }
+  .prose h3 {
+    font-size: 1.25em;
+  }
+  .prose a {
+    color: #667eea;
+    text-decoration: underline;
+  }
+  .prose a:hover {
+    color: #764ba2;
+  }
+  .prose code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25em;
+    font-size: 0.9em;
+  }
+  .prose pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1em;
+    border-radius: 0.5em;
+    overflow-x: auto;
+  }
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+  .prose ul,
+  .prose ol {
+    padding-left: 1.5em;
+  }
+  .prose li {
+    margin: 0.5em 0;
+  }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+  }
+  .prose th,
+  .prose td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5em;
+  }
+  .prose th {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+  }
+</style>
