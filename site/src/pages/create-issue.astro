@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+const repoUrl = 'https://github.com/cywf/gpt-builder';
+const newIssueUrl = `${repoUrl}/issues/new/choose`;
+
+// Prefilled issue templates
+const quickIssues = [
+  {
+    title: 'Bug Report',
+    emoji: '🐛',
+    description: 'Report a bug or unexpected behavior',
+    url: `${repoUrl}/issues/new?labels=bug&template=bug_report.md`,
+    prefill: {
+      title: 'Bug: ',
+      labels: 'bug',
+    },
+  },
+  {
+    title: 'Feature Request',
+    emoji: '✨',
+    description: 'Suggest a new feature or enhancement',
+    url: `${repoUrl}/issues/new?labels=enhancement&template=feature_request.md`,
+    prefill: {
+      title: 'Feature: ',
+      labels: 'enhancement',
+    },
+  },
+  {
+    title: 'Documentation',
+    emoji: '📚',
+    description: 'Improve or add documentation',
+    url: `${repoUrl}/issues/new?labels=documentation`,
+    prefill: {
+      title: 'Docs: ',
+      labels: 'documentation',
+    },
+  },
+  {
+    title: 'Question',
+    emoji: '❓',
+    description: 'Ask a question or seek clarification',
+    url: `${repoUrl}/issues/new?labels=question`,
+    prefill: {
+      title: 'Question: ',
+      labels: 'question',
+    },
+  },
+];
+---
+
+<Layout title="Create Issue">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-4xl font-bold mb-2">📝 Create Issue</h1>
+      <p class="text-lg opacity-70">
+        Report bugs, request features, or contribute to the project
+      </p>
+    </div>
+
+    <!-- Quick Issue Templates -->
+    <div class="grid md:grid-cols-2 gap-6">
+      {
+        quickIssues.map((issue) => (
+          <a
+            href={issue.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card bg-base-200 shadow-xl hover:shadow-2xl hover:scale-105 transition-all cursor-pointer"
+          >
+            <div class="card-body">
+              <h2 class="card-title">
+                <span class="text-4xl mr-2">{issue.emoji}</span>
+                {issue.title}
+              </h2>
+              <p>{issue.description}</p>
+              <div class="card-actions justify-end mt-4">
+                <button class="btn btn-primary btn-sm">
+                  Create {issue.title}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 ml-1"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Custom Issue -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">🎯 Custom Issue</h2>
+        <p>
+          For other types of issues or if you want to use the GitHub issue templates,
+          click below:
+        </p>
+        <div class="card-actions justify-start mt-4">
+          <a
+            href={newIssueUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            Open Issue Template Chooser
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 ml-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guidelines -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">📋 Issue Guidelines</h2>
+        <div class="space-y-2">
+          <h3 class="font-bold mt-4">Before Creating an Issue:</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>
+              Search <a
+                href={`${repoUrl}/issues`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link">existing issues</a
+              > to avoid duplicates
+            </li>
+            <li>Check the <a href={baseUrl + '/docs'} class="link">documentation</a> first</li>
+            <li>
+              For questions, consider using <a
+                href={`${repoUrl}/discussions`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link">GitHub Discussions</a
+              >
+            </li>
+          </ul>
+
+          <h3 class="font-bold mt-4">When Creating an Issue:</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Use a clear and descriptive title</li>
+            <li>Provide detailed steps to reproduce (for bugs)</li>
+            <li>Include relevant code snippets or error messages</li>
+            <li>Describe the expected vs. actual behavior</li>
+            <li>Add labels to categorize your issue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="flex gap-4 flex-wrap">
+      <a
+        href={`${repoUrl}/issues`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-ghost"
+      >
+        View All Issues
+      </a>
+      <a
+        href={`${repoUrl}/discussions`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-ghost"
+      >
+        Start a Discussion
+      </a>
+      <a href={baseUrl + '/docs'} class="btn btn-ghost"> View Documentation </a>
+    </div>
+  </div>
+</Layout>

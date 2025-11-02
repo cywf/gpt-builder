@@ -1,0 +1,26 @@
+[
+  {
+    "id": "demo-prompt-1",
+    "name": "Code Review Request",
+    "category": "Development",
+    "content": "Please review the following code for best practices, potential bugs, and performance improvements:\n\n[INSERT CODE HERE]",
+    "tags": ["code-review", "programming", "best-practices"],
+    "createdAt": "2024-01-15T09:00:00.000Z"
+  },
+  {
+    "id": "demo-prompt-2",
+    "name": "Bug Investigation",
+    "category": "Development",
+    "content": "I'm encountering the following error:\n\n[INSERT ERROR MESSAGE]\n\nHere's the relevant code:\n\n[INSERT CODE]\n\nCan you help me identify and fix the issue?",
+    "tags": ["debugging", "troubleshooting", "error-handling"],
+    "createdAt": "2024-01-15T09:15:00.000Z"
+  },
+  {
+    "id": "demo-prompt-3",
+    "name": "Story Opening",
+    "category": "Creative Writing",
+    "content": "Help me write an engaging opening paragraph for a story about [THEME/TOPIC]. The tone should be [TONE] and the target audience is [AUDIENCE].",
+    "tags": ["writing", "creative", "story", "opening"],
+    "createdAt": "2024-01-16T11:00:00.000Z"
+  }
+]

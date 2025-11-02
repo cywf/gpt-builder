@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MermaidViewer from '../components/MermaidViewer';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const baseUrl = import.meta.env.BASE_URL;
+
+// Extract Mermaid diagrams from README
+const rootPath = join(process.cwd(), '..');
+let diagrams: Array<{ name: string; content: string }> = [];
+
+try {
+  const readmeContent = await readFile(join(rootPath, 'README.md'), 'utf-8');
+  
+  // Extract mermaid code blocks from README
+  const mermaidRegex = /```mermaid\n([\s\S]*?)```/g;
+  let match;
+  let index = 1;
+  
+  while ((match = mermaidRegex.exec(readmeContent)) !== null) {
+    diagrams.push({
+      name: `Architecture Diagram ${index}`,
+      content: match[1].trim(),
+    });
+    index++;
+  }
+} catch (error) {
+  console.error('Failed to read README:', error);
+}
+
+// If no diagrams found, add a sample
+if (diagrams.length === 0) {
+  diagrams = [
+    {
+      name: 'Sample Architecture',
+      content: `graph TB
+    A[GPT Builder] --> B[Frontend - React/Vite]
+    A --> C[Backend - Express API]
+    A --> D[Docker Container]
+    A --> E[GitHub Actions]
+    
+    B --> B1[Dashboard]
+    B --> B2[Prompts Library]
+    B --> B3[Templates]
+    
+    C --> C1[Profile Management]
+    C --> C2[Prompt Storage]
+    C --> C3[Template Sharing]
+    
+    D --> D1[Multi-stage Build]
+    D --> D2[Health Checks]
+    
+    E --> E1[CI/CD Pipeline]
+    E --> E2[Docker Auto-build]
+    E --> E3[Issue Management]
+    E --> E4[PR Automation]
+    
+    style A fill:#667eea,stroke:#764ba2,stroke-width:3px,color:#fff
+    style B fill:#48bb78,stroke:#38a169,stroke-width:2px,color:#fff
+    style C fill:#ed8936,stroke:#dd6b20,stroke-width:2px,color:#fff
+    style D fill:#4299e1,stroke:#3182ce,stroke-width:2px,color:#fff
+    style E fill:#9f7aea,stroke:#805ad5,stroke-width:2px,color:#fff`,
+    },
+  ];
+}
+---
+
+<Layout title="Project Visualizer">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-4xl font-bold mb-2">📊 Project Visualizer</h1>
+      <p class="text-lg opacity-70">
+        Visual representations of the project architecture and workflows
+      </p>
+    </div>
+
+    <!-- Info -->
+    <div class="alert alert-info">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="stroke-current shrink-0 w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <div>
+        <div class="text-sm">
+          Diagrams are automatically extracted from the README and other documentation files.
+        </div>
+      </div>
+    </div>
+
+    <!-- Mermaid Viewer -->
+    <MermaidViewer client:load diagrams={diagrams} />
+
+    <!-- About Mermaid -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">About Mermaid</h2>
+        <p>
+          Mermaid is a JavaScript-based diagramming and charting tool that renders
+          Markdown-inspired text definitions to create and modify diagrams dynamically.
+        </p>
+        <div class="card-actions justify-start mt-4">
+          <a
+            href="https://mermaid.js.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline btn-sm"
+          >
+            Learn More About Mermaid
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 ml-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

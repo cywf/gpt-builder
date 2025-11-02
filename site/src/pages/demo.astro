@@ -1,0 +1,208 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="Demo">
+  <div class="space-y-6">
+    <!-- Demo Banner -->
+    <div class="alert alert-info shadow-lg">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="stroke-current shrink-0 w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <div>
+        <h3 class="font-bold">Static Demo Mode</h3>
+        <div class="text-sm">
+          This is a read-only preview with sample data. No backend server required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4 flex-wrap">
+      <a href="#run-locally" class="btn btn-primary">
+        🚀 Run Locally
+      </a>
+      <a href="#docker" class="btn btn-outline">
+        🐳 Use Docker
+      </a>
+    </div>
+
+    <!-- Demo Content Tabs -->
+    <div role="tablist" class="tabs tabs-lifted">
+      <input
+        type="radio"
+        name="demo_tabs"
+        role="tab"
+        class="tab"
+        aria-label="Profiles"
+        checked
+      />
+      <div role="tabpanel" class="tab-content bg-base-200 border-base-300 rounded-box p-6">
+        <h2 class="text-2xl font-bold mb-4">GPT Profiles</h2>
+        <div id="profiles-container" class="grid md:grid-cols-2 gap-4">
+          <!-- Will be populated by client-side script -->
+        </div>
+      </div>
+
+      <input type="radio" name="demo_tabs" role="tab" class="tab" aria-label="Prompts" />
+      <div role="tabpanel" class="tab-content bg-base-200 border-base-300 rounded-box p-6">
+        <h2 class="text-2xl font-bold mb-4">Prompt Library</h2>
+        <div id="prompts-container" class="space-y-4">
+          <!-- Will be populated by client-side script -->
+        </div>
+      </div>
+
+      <input type="radio" name="demo_tabs" role="tab" class="tab" aria-label="Templates" />
+      <div role="tabpanel" class="tab-content bg-base-200 border-base-300 rounded-box p-6">
+        <h2 class="text-2xl font-bold mb-4">Templates</h2>
+        <div id="templates-container" class="space-y-4">
+          <!-- Will be populated by client-side script -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Start Instructions -->
+    <div id="run-locally" class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">🚀 Run Locally</h2>
+        <p class="mb-4">Get the full interactive experience on your machine:</p>
+        <div class="mockup-code">
+          <pre data-prefix="$"><code>git clone https://github.com/cywf/gpt-builder.git</code></pre>
+          <pre data-prefix="$"><code>cd gpt-builder</code></pre>
+          <pre data-prefix="$"><code>npm install</code></pre>
+          <pre data-prefix="$"><code>npm run dev:all</code></pre>
+          <pre data-prefix=">" class="text-success"><code>Open http://localhost:3000</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="docker" class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">🐳 Docker Quick Start</h2>
+        <p class="mb-4">Run with Docker Compose for the easiest setup:</p>
+        <div class="mockup-code">
+          <pre data-prefix="$"><code>git clone https://github.com/cywf/gpt-builder.git</code></pre>
+          <pre data-prefix="$"><code>cd gpt-builder</code></pre>
+          <pre data-prefix="$"><code>docker-compose up -d</code></pre>
+          <pre data-prefix=">" class="text-success"><code>Open http://localhost:3001</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const baseUrl = import.meta.env.BASE_URL;
+
+  // Load and display profiles
+  async function loadProfiles() {
+    try {
+      const response = await fetch(`${baseUrl}/demo/profiles.json`);
+      const profiles = await response.json();
+      const container = document.getElementById('profiles-container');
+      if (container) {
+        container.innerHTML = profiles
+          .map(
+            (profile: any) => `
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title">${profile.name}</h3>
+              <p>${profile.description}</p>
+              <div class="card-actions justify-start mt-2">
+                <div class="badge badge-outline">Temp: ${profile.temperature}</div>
+                <div class="badge badge-outline">Max Tokens: ${profile.maxTokens}</div>
+              </div>
+              <div class="mt-4">
+                <p class="text-sm opacity-70">Initiation Prompt:</p>
+                <p class="text-sm italic">"${profile.initiationPrompt.substring(0, 100)}..."</p>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join('');
+      }
+    } catch (error) {
+      console.error('Failed to load profiles:', error);
+    }
+  }
+
+  // Load and display prompts
+  async function loadPrompts() {
+    try {
+      const response = await fetch(`${baseUrl}/demo/prompts.json`);
+      const prompts = await response.json();
+      const container = document.getElementById('prompts-container');
+      if (container) {
+        container.innerHTML = prompts
+          .map(
+            (prompt: any) => `
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title">${prompt.name}</h3>
+              <div class="badge badge-primary">${prompt.category}</div>
+              <p class="mt-2 whitespace-pre-wrap">${prompt.content}</p>
+              <div class="card-actions justify-start mt-2">
+                ${prompt.tags.map((tag: string) => `<div class="badge badge-ghost">${tag}</div>`).join('')}
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join('');
+      }
+    } catch (error) {
+      console.error('Failed to load prompts:', error);
+    }
+  }
+
+  // Load and display templates
+  async function loadTemplates() {
+    try {
+      const response = await fetch(`${baseUrl}/demo/templates.json`);
+      const templates = await response.json();
+      const container = document.getElementById('templates-container');
+      if (container) {
+        container.innerHTML = templates
+          .map(
+            (template: any) => `
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title">${template.name}</h3>
+              <p>${template.description}</p>
+              <div class="badge badge-secondary">${template.category}</div>
+              <details class="mt-4">
+                <summary class="cursor-pointer font-semibold">View Template</summary>
+                <pre class="mt-2 p-4 bg-base-300 rounded overflow-x-auto"><code>${JSON.stringify(template.content, null, 2)}</code></pre>
+              </details>
+              <div class="card-actions justify-start mt-2">
+                ${template.tags.map((tag: string) => `<div class="badge badge-ghost">${tag}</div>`).join('')}
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join('');
+      }
+    } catch (error) {
+      console.error('Failed to load templates:', error);
+    }
+  }
+
+  // Load all demo data
+  loadProfiles();
+  loadPrompts();
+  loadTemplates();
+</script>
