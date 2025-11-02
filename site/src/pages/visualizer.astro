@@ -4,8 +4,6 @@ import MermaidViewer from '../components/MermaidViewer';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const baseUrl = import.meta.env.BASE_URL;
-
 // Extract Mermaid diagrams from README
 const rootPath = join(process.cwd(), '..');
 let diagrams: Array<{ name: string; content: string }> = [];
